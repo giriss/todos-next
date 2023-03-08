@@ -1,16 +1,29 @@
-import { useCallback, useState } from "react";
+import { type Todo } from "@/requests/todos";
+import { type FC, useCallback, useState, useMemo, useEffect } from "react";
 import TodoCreator from "./TodoCreator";
 import TodoList from "./TodoList";
 
-const TodoApp = () => {
-  const [todos, setTodos] = useState<string[]>([])
-  const createTodo = useCallback((val: string) => {
-    setTodos([...todos, val])
-  }, [todos])
+interface TodoAppProps {
+  todos: Todo[]
+  onCreate: (todo: Todo) => void
+}
+
+const TodoApp: FC<TodoAppProps> = ({ todos, onCreate }) => {
+  const initialTodoTitles = useMemo(() => todos.map(({ title }) => title), [todos])
+  const [todoTitles, setTodoTitles] = useState(initialTodoTitles)
+
+  const createTodo = useCallback((title: string) => {
+    setTodoTitles([...todoTitles, title])
+    onCreate({ title })
+  }, [todoTitles, onCreate])
+
+  useEffect(() => {
+    setTodoTitles(initialTodoTitles)
+  }, [initialTodoTitles])
 
   return (
     <>
-      <TodoList todos={todos} />
+      <TodoList todos={todoTitles} />
       <TodoCreator onCreate={createTodo} />
     </>
   );

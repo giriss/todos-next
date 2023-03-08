@@ -8,6 +8,7 @@ export default function Document() {
         <Main />
         <NextScript />
       </body>
+      <footer>&copy; 2023</footer>
     </Html>
   )
 }
