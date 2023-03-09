@@ -12,6 +12,8 @@
     "prettier/prettier": 2,
     "arrow-body-style": ["error", "as-needed"],
     "@typescript-eslint/strict-boolean-expressions": ["error", {
+      "allowString": true,
+      "allowNullableString": true,
       "allowNullableBoolean": true
     }]
   }

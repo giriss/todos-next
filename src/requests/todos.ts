@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { ENDPOINT } from '../lib/constants'
+import { ENDPOINT } from '@/lib/constants'
 
 export interface Todo {
   id?: number
