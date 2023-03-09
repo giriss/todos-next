@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import type { FC } from 'react'
+import { type FC, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
+import { UserContext } from '@/contexts'
+import { type User } from '@/requests/user'
 
 export type GetLayoutType = (page: JSX.Element) => JSX.Element
 
@@ -15,10 +17,15 @@ type AppPropsWithLayout = AppProps & {
 }
 
 const App: FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
+  const userState = useState<User | undefined>()
   const getLayout =
     Component.getLayout ?? (page => <DashboardLayout>{page}</DashboardLayout>)
 
-  return getLayout(<Component {...pageProps} />)
+  return (
+    <UserContext.Provider value={userState}>
+      {getLayout(<Component {...pageProps} />)}
+    </UserContext.Provider>
+  )
 }
 
 export default App

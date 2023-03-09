@@ -1,10 +1,23 @@
+import { UserContext } from '@/contexts'
 import { Container } from '@mui/material'
-import type { FC, ReactNode } from 'react'
+import { useRouter } from 'next/router'
+import { type FC, type ReactNode, useContext, useEffect } from 'react'
 
-const HomeLayout: FC<{ children: ReactNode }> = ({ children }) => (
-  <Container maxWidth="md" sx={{ paddingTop: '50px' }}>
-    {children}
-  </Container>
-)
+const HomeLayout: FC<{ children: ReactNode }> = ({ children }) => {
+  const [user] = useContext(UserContext)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      void router.push('/dashboard')
+    }
+  }, [router, user])
+
+  return (
+    <Container maxWidth="md" sx={{ paddingTop: '50px' }}>
+      {children}
+    </Container>
+  )
+}
 
 export default HomeLayout

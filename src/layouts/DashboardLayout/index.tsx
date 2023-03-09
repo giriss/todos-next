@@ -1,3 +1,4 @@
+import { UserContext } from '@/contexts'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Icon from '@mui/material/Icon'
@@ -7,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { type FC, useState, type ReactNode } from 'react'
+import { type FC, useState, type ReactNode, useContext, useEffect } from 'react'
 
 type Tab = 'dashboard' | 'table' | 'todos'
 
@@ -16,10 +17,17 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
+  const [user] = useContext(UserContext)
   const router = useRouter()
   const [currentTab, setCurrentTab] = useState<Tab>(
     router.route.substring(1) as Tab
   )
+
+  useEffect(() => {
+    if (!user) {
+      void router.push('/')
+    }
+  }, [router, user])
 
   return (
     <Container maxWidth="md">

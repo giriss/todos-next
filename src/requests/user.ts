@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import { ENDPOINT } from '@/lib/constants'
 
-interface User {
+export interface User {
   id?: number
   firstname: string
   lastname: string
