@@ -1,7 +1,7 @@
-import { FC, useCallback } from "react"
+import { type FC } from 'react'
 import List from '@mui/material/List'
-import TodoListItem from "./TodoListItem"
-import { Todo } from "../../requests/todos"
+import TodoListItem from './TodoListItem'
+import { type Todo } from '../../requests/todos'
 
 interface TodoListProps {
   todos: Todo[]
@@ -20,8 +20,12 @@ const TodoList: FC<TodoListProps> = ({ todos, onDelete, onCompleteToggle }) => {
         <TodoListItem
           key={todo.id ?? todo.title}
           todo={todo}
-          onDelete={() => todo.id && onDelete(todo.id)}
-          onCompleteToggle={() => todo.id && onCompleteToggle(todo.id)}
+          onDelete={() => {
+            todo.id != null && onDelete(todo.id)
+          }}
+          onCompleteToggle={() => {
+            todo.id != null && onCompleteToggle(todo.id)
+          }}
         />
       ))}
     </List>

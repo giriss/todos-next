@@ -8,21 +8,27 @@ export interface Todo {
   is_completed?: boolean
 }
 
-export const getTodos = async () => {
+export const getTodos = async (): Promise<Todo[]> => {
   const { data } = await Axios.get<Todo[]>(`${ENDPOINT}/todos`)
   return data
 }
 
-export const createTodo = async (todo: Todo) => {
+export const createTodo = async (todo: Todo): Promise<Todo> => {
   const { data } = await Axios.post<Todo>(`${ENDPOINT}/todos`, todo)
   return data
 }
 
-export const updateTodo = async (id: number, valToUpdate: Partial<Todo>) => {
-  const { data } = await Axios.patch<Todo>(`${ENDPOINT}/todos/${id}`, valToUpdate)
+export const updateTodo = async (
+  id: number,
+  valToUpdate: Partial<Todo>
+): Promise<Todo> => {
+  const { data } = await Axios.patch<Todo>(
+    `${ENDPOINT}/todos/${id}`,
+    valToUpdate
+  )
   return data
 }
 
-export const deleteTodo = async (id: number) => {
+export const deleteTodo = async (id: number): Promise<void> => {
   await Axios.delete(`${ENDPOINT}/todos/${id}`)
 }

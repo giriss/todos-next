@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, type GridColDef } from '@mui/x-data-grid'
+import type { FC } from 'react'
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -36,23 +37,23 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ]
 
-export default function Table() {
-  return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
+const Table: FC = () => (
+  <Box sx={{ height: 400, width: '100%' }}>
+    <DataGrid
+      rows={rows}
+      columns={columns}
+      initialState={{
+        pagination: {
+          paginationModel: {
+            pageSize: 5,
           },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
-  )
-}
+        },
+      }}
+      pageSizeOptions={[5]}
+      checkboxSelection
+      disableRowSelectionOnClick
+    />
+  </Box>
+)
+
+export default Table

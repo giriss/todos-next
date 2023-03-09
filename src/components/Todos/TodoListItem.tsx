@@ -1,4 +1,4 @@
-import { type FC } from "react"
+import { type FC } from 'react'
 import {
   ListItem,
   ListItemText,
@@ -6,10 +6,10 @@ import {
   ListItemIcon,
   Icon,
   Checkbox,
-  IconButton
+  IconButton,
 } from '@mui/material'
 
-import { Todo } from "../../requests/todos"
+import { type Todo } from '../../requests/todos'
 
 interface TodoListProps {
   todo: Todo
@@ -17,7 +17,11 @@ interface TodoListProps {
   onCompleteToggle: VoidFunction
 }
 
-const TodoListItem: FC<TodoListProps> = ({ todo, onDelete, onCompleteToggle }) => (
+const TodoListItem: FC<TodoListProps> = ({
+  todo,
+  onDelete,
+  onCompleteToggle,
+}) => (
   <ListItem
     disablePadding
     secondaryAction={

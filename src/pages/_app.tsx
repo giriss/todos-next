@@ -1,31 +1,66 @@
-import { Container, Grid, Icon, Link, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material'
-import type { AppProps } from 'next/app'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Icon from '@mui/material/Icon'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
+import type { AppType } from 'next/app'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
-export default function App({ Component, pageProps }: AppProps) {
+type Tab = 'home' | 'table' | 'todos'
+
+const App: AppType = ({ Component, pageProps }) => {
+  const router = useRouter()
+  const [currentTab, setCurrentTab] = useState<Tab>(
+    router.route.substring(1) as Tab
+  )
+
   return (
     <Container maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <MenuList>
-            <MenuItem component={Link} href="/">
+            <MenuItem
+              selected={currentTab === 'home'}
+              onClick={() => {
+                setCurrentTab('home')
+              }}
+              component={Link}
+              href="/"
+            >
               <ListItemIcon>
                 <Icon>house</Icon>
               </ListItemIcon>
               <ListItemText>Home</ListItemText>
             </MenuItem>
-            <MenuItem component={Link} href="/table">
+            <MenuItem
+              selected={currentTab === 'table'}
+              onClick={() => {
+                setCurrentTab('table')
+              }}
+              component={Link}
+              href="/table"
+            >
               <ListItemIcon>
                 <Icon>table chart</Icon>
               </ListItemIcon>
               <ListItemText>Table</ListItemText>
             </MenuItem>
-            <MenuItem component={Link} href="/todos">
+            <MenuItem
+              selected={currentTab === 'todos'}
+              onClick={() => {
+                setCurrentTab('todos')
+              }}
+              component={Link}
+              href="/todos"
+            >
               <ListItemIcon>
                 <Icon>toc</Icon>
               </ListItemIcon>
-              <ListItemText>
-                Todo
-              </ListItemText>
+              <ListItemText>Todo</ListItemText>
             </MenuItem>
           </MenuList>
         </Grid>
@@ -36,3 +71,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </Container>
   )
 }
+
+export default App

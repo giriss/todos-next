@@ -1,8 +1,13 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { type NextPage } from 'next'
+import Head from 'next/head'
 
-export default function Types() {
-  return (
+const Home: NextPage = () => (
+  <>
+    <Head>
+      <title>Home</title>
+    </Head>
     <Box>
       <Typography variant="h1" gutterBottom>
         h1. Heading
@@ -23,24 +28,24 @@ export default function Types() {
         h6. Heading
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
-        subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur
+        subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Quos blanditiis tenetur
       </Typography>
       <Typography variant="subtitle2" gutterBottom>
-        subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur
+        subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Quos blanditiis tenetur
       </Typography>
       <Typography variant="body1" gutterBottom>
         body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
+        blanditiis tenetur unde suscipit, quam beatae rerum inventore
+        consectetur, neque doloribus, cupiditate numquam dignissimos laborum
+        fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
       <Typography variant="body2" gutterBottom>
         body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
+        blanditiis tenetur unde suscipit, quam beatae rerum inventore
+        consectetur, neque doloribus, cupiditate numquam dignissimos laborum
+        fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
       <Typography variant="button" display="block" gutterBottom>
         button text
@@ -52,5 +57,7 @@ export default function Types() {
         overline text
       </Typography>
     </Box>
-  )
-}
+  </>
+)
+
+export default Home
