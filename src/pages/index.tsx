@@ -1,14 +1,22 @@
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Login from '@/components/Login'
 import Register from '@/components/Register'
 import HomeLayout from '@/layouts/HomeLayout'
 import type { NextPageWithLayout } from '@/pages/_app'
-import { Grid } from '@mui/material'
 
 const Index: NextPageWithLayout = () => (
   <Grid container>
-    <Grid item xs={6}>
+    <Grid item xs>
       <Register />
     </Grid>
-    <Grid item xs={6}></Grid>
+    <Divider flexItem orientation="vertical">
+      <Typography variant="body1">OR</Typography>
+    </Divider>
+    <Grid item xs>
+      <Login />
+    </Grid>
   </Grid>
 )
 
