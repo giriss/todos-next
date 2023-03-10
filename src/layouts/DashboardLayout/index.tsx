@@ -24,10 +24,10 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   )
 
   useEffect(() => {
-    if (!user) {
+    if (!user?.token) {
       void router.push('/')
     }
-  }, [router, user])
+  }, [router, user?.token])
 
   return (
     <Container maxWidth="md">

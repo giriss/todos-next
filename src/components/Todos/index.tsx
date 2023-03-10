@@ -1,4 +1,6 @@
-import { type FC, useCallback, useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { type FC, useCallback, useEffect, useState, useContext } from 'react'
 import TodoCreator from './TodoCreator'
 import TodoList from './TodoList'
 import {
@@ -8,6 +10,7 @@ import {
   type Todo,
   updateTodo,
 } from '../../requests/todos'
+import { UserContext } from '@/contexts'
 
 interface TodosProps {
   className?: string
@@ -15,22 +18,23 @@ interface TodosProps {
 
 const Todos: FC<TodosProps> = ({ className }) => {
   const [todos, setTodos] = useState<Todo[]>([])
+  const [user] = useContext(UserContext)
 
   const createTodo = useCallback(
     async (todo: Todo) => {
-      const newTodo = await createNewTodo(todo)
+      const newTodo = await createNewTodo(user!.token!, todo)
       setTodos([...todos, newTodo])
     },
-    [todos]
+    [todos, user?.token]
   )
 
   const deleteTodo = useCallback(
     (todoId: number) => {
       const remainingTodo = todos.filter(todo => todo.id !== todoId)
       setTodos(remainingTodo)
-      void deleteExistingTodo(todoId)
+      void deleteExistingTodo(user!.token!, todoId)
     },
-    [todos]
+    [todos, user?.token]
   )
 
   const toggleComplete = useCallback(
@@ -40,16 +44,18 @@ const Todos: FC<TodosProps> = ({ className }) => {
       const updatedTodos = [...todos]
       updatedTodos[index] = { ...todo, is_completed: !todo.is_completed }
       setTodos(updatedTodos)
-      void updateTodo(todoId, { is_completed: !todo.is_completed })
+      void updateTodo(user!.token!, todoId, {
+        is_completed: !todo.is_completed,
+      })
     },
-    [todos]
+    [todos, user?.token]
   )
 
   useEffect(() => {
-    void getTodos().then(todos => {
+    void getTodos(user!.token!).then(todos => {
       setTodos(todos)
     })
-  }, [])
+  }, [user?.token])
 
   return (
     <div className={className}>

@@ -8,10 +8,10 @@ const HomeLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       void router.push('/dashboard')
     }
-  }, [router, user])
+  }, [router, user?.token])
 
   return (
     <Container maxWidth="md" sx={{ paddingTop: '50px' }}>
