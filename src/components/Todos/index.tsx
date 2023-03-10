@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { type FC, useCallback, useEffect, useState, useContext } from 'react'
-import TodoCreator from './TodoCreator'
-import TodoList from './TodoList'
+import { type FC, useCallback, useEffect, useState } from 'react'
+import { useAtomValue } from 'jotai'
 import {
   getTodos,
+  updateTodo,
   createTodo as createNewTodo,
   deleteTodo as deleteExistingTodo,
   type Todo,
-  updateTodo,
-} from '../../requests/todos'
-import { UserContext } from '@/contexts'
+} from '@/requests/todos'
+import { userAtom } from '@/atoms'
+import TodoCreator from './TodoCreator'
+import TodoList from './TodoList'
 
 interface TodosProps {
   className?: string
@@ -17,13 +18,13 @@ interface TodosProps {
 
 const Todos: FC<TodosProps> = ({ className }) => {
   const [todos, setTodos] = useState<Todo[]>([])
-  const [user] = useContext(UserContext)
+  const user = useAtomValue(userAtom)
 
   const createTodo = useCallback(
     async (todo: Todo) => {
       if (!user?.token) return
 
-      const newTodo = await createNewTodo(user?.token, todo)
+      const newTodo = await createNewTodo(user.token, todo)
       setTodos([...todos, newTodo])
     },
     [todos, user?.token]
@@ -35,7 +36,7 @@ const Todos: FC<TodosProps> = ({ className }) => {
 
       const remainingTodo = todos.filter(todo => todo.id !== todoId)
       setTodos(remainingTodo)
-      void deleteExistingTodo(user?.token, todoId)
+      void deleteExistingTodo(user.token, todoId)
     },
     [todos, user?.token]
   )
@@ -49,7 +50,7 @@ const Todos: FC<TodosProps> = ({ className }) => {
       const updatedTodos = [...todos]
       updatedTodos[index] = { ...todo, is_completed: !todo.is_completed }
       setTodos(updatedTodos)
-      void updateTodo(user?.token, todoId, {
+      void updateTodo(user.token, todoId, {
         is_completed: !todo.is_completed,
       })
     },

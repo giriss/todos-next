@@ -1,4 +1,3 @@
-import { UserContext } from '@/contexts'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Icon from '@mui/material/Icon'
@@ -6,16 +5,17 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
+import { useAtom } from 'jotai'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
   type FC,
-  useState,
   type ReactNode,
-  useContext,
+  useState,
   useEffect,
   useCallback,
 } from 'react'
+import { userAtom } from '@/atoms'
 
 type Tab = 'dashboard' | 'table' | 'todos'
 
@@ -24,13 +24,14 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useAtom(userAtom)
   const router = useRouter()
   const [currentTab, setCurrentTab] = useState<Tab>(
     router.route.substring(1) as Tab
   )
+
   const logout = useCallback(() => {
-    if (setUser) setUser(undefined)
+    setUser(undefined)
   }, [setUser])
 
   useEffect(() => {

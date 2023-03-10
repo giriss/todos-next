@@ -1,10 +1,11 @@
-import { UserContext } from '@/contexts'
 import { Container } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import { useRouter } from 'next/router'
-import { type FC, type ReactNode, useContext, useEffect } from 'react'
+import { type FC, type ReactNode, useEffect } from 'react'
+import { userAtom } from '@/atoms'
 
 const HomeLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const [user] = useContext(UserContext)
+  const user = useAtomValue(userAtom)
   const router = useRouter()
 
   useEffect(() => {

@@ -1,11 +1,12 @@
 import Grid from '@mui/material/Grid'
 import TextField, { type TextFieldProps } from '@mui/material/TextField'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { type FC, useCallback, useContext } from 'react'
+import { type FC, useCallback } from 'react'
 import { Formik, type FormikProps } from 'formik'
-import validations from './validations'
+import { useSetAtom } from 'jotai'
+import { userAtom } from '@/atoms'
 import { loginUser } from '@/requests/user'
-import { UserContext } from '@/contexts'
+import validations from './validations'
 
 interface FormValues {
   email: string
@@ -18,11 +19,11 @@ const initialValues: FormValues = {
 }
 
 const Login: FC = () => {
-  const [, setUser] = useContext(UserContext)
+  const setUser = useSetAtom(userAtom)
   const submitCreateUser = useCallback(
     async (credentials: FormValues) => {
       const user = await loginUser(credentials)
-      if (setUser) setUser(user)
+      setUser(user)
     },
     [setUser]
   )
