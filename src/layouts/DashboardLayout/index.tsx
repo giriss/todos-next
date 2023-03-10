@@ -8,7 +8,14 @@ import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { type FC, useState, type ReactNode, useContext, useEffect } from 'react'
+import {
+  type FC,
+  useState,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react'
 
 type Tab = 'dashboard' | 'table' | 'todos'
 
@@ -17,11 +24,14 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
-  const [user] = useContext(UserContext)
+  const [user, setUser] = useContext(UserContext)
   const router = useRouter()
   const [currentTab, setCurrentTab] = useState<Tab>(
     router.route.substring(1) as Tab
   )
+  const logout = useCallback(() => {
+    if (setUser) setUser(undefined)
+  }, [setUser])
 
   useEffect(() => {
     if (!user?.token) {
@@ -72,6 +82,12 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                 <Icon>toc</Icon>
               </ListItemIcon>
               <ListItemText>Todo</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={logout}>
+              <ListItemIcon>
+                <Icon>close</Icon>
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
             </MenuItem>
           </MenuList>
         </Grid>

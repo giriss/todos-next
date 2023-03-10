@@ -33,6 +33,8 @@ const App: FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
   useEffect(() => {
     if (user) {
       sessionStorage.setItem('user', JSON.stringify(user))
+    } else {
+      sessionStorage.removeItem('user')
     }
   }, [stringify(user)])
 
