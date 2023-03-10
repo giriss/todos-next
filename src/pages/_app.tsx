@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import stringify from 'fast-safe-stringify'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import { type FC, useState } from 'react'
+import { type FC, useState, useMemo, useEffect } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import { UserContext } from '@/contexts'
+import { type StateAccessor, UserContext } from '@/contexts'
 import { type User } from '@/requests/user'
 
 export type GetLayoutType = (page: JSX.Element) => JSX.Element
@@ -17,12 +19,30 @@ type AppPropsWithLayout = AppProps & {
 }
 
 const App: FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
-  const userState = useState<User | undefined>()
+  const [user, setUser] = useState<User | undefined>()
   const getLayout =
     Component.getLayout ?? (page => <DashboardLayout>{page}</DashboardLayout>)
 
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user')
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem('user', JSON.stringify(user))
+    }
+  }, [stringify(user)])
+
+  const userAccessor = useMemo<StateAccessor<User>>(
+    () => [user, setUser],
+    [stringify(user)]
+  )
+
   return (
-    <UserContext.Provider value={userState}>
+    <UserContext.Provider value={userAccessor}>
       {getLayout(<Component {...pageProps} />)}
     </UserContext.Provider>
   )
