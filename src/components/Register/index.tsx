@@ -1,10 +1,11 @@
 import Grid from '@mui/material/Grid'
 import TextField, { type TextFieldProps } from '@mui/material/TextField'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { type FC, useCallback } from 'react'
+import { type FC, useCallback, useContext } from 'react'
 import { Formik, type FormikProps } from 'formik'
 import validations from './validations'
 import { createUser } from '@/requests/user'
+import { UserContext } from '@/contexts'
 
 interface FormValues {
   firstname: string
@@ -23,10 +24,13 @@ const initialValues: FormValues = {
 }
 
 const Register: FC = () => {
+  const [, setUser] = useContext(UserContext)
   const submitCreateUser = useCallback(
-    async ({ password_confirm: _pc, ...permittedValues }: FormValues) =>
-      await createUser(permittedValues),
-    []
+    async ({ password_confirm: _pc, ...permittedValues }: FormValues) => {
+      const user = await createUser(permittedValues)
+      if (setUser) setUser(user)
+    },
+    [setUser]
   )
 
   return (

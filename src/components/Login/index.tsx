@@ -22,9 +22,7 @@ const Login: FC = () => {
   const submitCreateUser = useCallback(
     async (credentials: FormValues) => {
       const user = await loginUser(credentials)
-      if (setUser) {
-        setUser(user)
-      }
+      if (setUser) setUser(user)
     },
     [setUser]
   )
